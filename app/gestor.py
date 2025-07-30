@@ -2,6 +2,9 @@ import json
 import os
 
 ARCHIVO_JSON = 'datos.json'
+MUSICA_JSON = 'musica.json'
+PELICULA_JSON = 'pelicula.json'
+LIBRO_JSON = 'libro.json'
 
 def cargar_datos():
     if os.path.exists(ARCHIVO_JSON):
@@ -9,7 +12,7 @@ def cargar_datos():
             return json.load(f)
     return []
 
-def guardar_datos(coleccion):
+def Guardar_datos(coleccion):
     with open(ARCHIVO_JSON, 'w', encoding='utf-8') as f:
         json.dump(coleccion, f, indent=4, ensure_ascii=False)
 
@@ -28,10 +31,10 @@ def añadir_elemento(coleccion):
         "valoracion": valoracion if valoracion else None
     }
     coleccion.append(elemento)
-    guardar_datos(coleccion)
+    Guardar_datos(coleccion)
     print("Elemento añadido correctamente.\n")
 
-def listar_elementos(coleccion):
+def ver_elementos(coleccion):
     if not coleccion:
         print("No hay elementos en la colección.\n")
         return
@@ -81,7 +84,7 @@ def editar_elemento(coleccion):
             if nuevo_genero: elem["genero"] = nuevo_genero
             if nueva_valoracion: elem["valoracion"] = nueva_valoracion
 
-            guardar_datos(coleccion)
+            Guardar_datos(coleccion)
             print("Elemento actualizado.\n")
             return
     print("Elemento no encontrado.\n")
@@ -93,7 +96,26 @@ def eliminar_elemento(coleccion):
             confirmacion = input(f"¿Estás seguro de eliminar '{elem['titulo']}'? (s/n): ")
             if confirmacion.lower() == "s":
                 coleccion.pop(i)
-                guardar_datos(coleccion)
+                Guardar_datos(coleccion)
                 print("Elemento eliminado.\n")
                 return
-    print("Elemento no encontrado.\n")
+    print("Elemento no encontrado.\n") 
+    
+def Elementos_categoria(coleccion):
+    Categoria = input("Introduce el nombre de la categoria para ver : ")
+    for i, elem in enumerate(coleccion):
+        if elem['Categoria'].lower() == Categoria:
+            
+        
+    
+    
+    
+    
+    
+def Guardar_y_Cargar(coleccion):
+    Guardar_datos(coleccion)
+
+def Salir(coleccion):
+    Guardar_datos(coleccion)
+    
+            

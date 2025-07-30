@@ -1,5 +1,4 @@
-from app.gestor import cargar_datos, guardar_datos, añadir_elemento, ver_elemento, buscar_elemento, editar_elemento, eliminar_elemento, elementos_categoria, guardar_y_cargar, salir
-from app import gestor
+from app.gestor import cargar_datos, añadir_elemento, ver_elementos, buscar_elemento, editar_elemento, eliminar_elemento, Elementos_categoria, Guardar_y_Cargar, Salir
 def mostrar_menu():
     print ('=== Coleccion Multimedia ===')
     print ('1. añadir un  nuevo elemento')
@@ -22,7 +21,7 @@ def main ():
         if opcion == "1":
             añadir_elemento(coleccion)
         elif opcion == "2":
-            ver_elemento(coleccion)
+            ver_elementos(coleccion)
         elif opcion == "3":
             buscar_elemento(coleccion)
         elif opcion == "4":
@@ -30,11 +29,11 @@ def main ():
         elif opcion == "5":
             eliminar_elemento(coleccion)
         elif opcion == "6":
-            elementos_categoria(coleccion)
+            Elementos_categoria(coleccion)
         elif opcion == "7":
-            guardar_y_cargar(coleccion)
+            Guardar_y_Cargar(coleccion)
         elif opcion == "8":
-            salir(coleccion)
+            Salir(coleccion)
             break
         else:
             print('opcion invalida intenytar de nuevo')
