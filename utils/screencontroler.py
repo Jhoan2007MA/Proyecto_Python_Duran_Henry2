@@ -1,7 +1,7 @@
 import os 
 import sys
 
-def limpiarPantalla():
+def limpiarpantalla():
     if sys.platform=="linux" or sys.platform=="darwin":
         os.system('clear')
     else: 
