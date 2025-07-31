@@ -105,6 +105,7 @@ def Elementos_categoria(coleccion):
     Categoria = input("Introduce el nombre de la categoria para ver : ")
     for i, elem in enumerate(coleccion):
         if elem['Categoria'].lower() == Categoria:
+            Categoria = input(f'')
             
         
     

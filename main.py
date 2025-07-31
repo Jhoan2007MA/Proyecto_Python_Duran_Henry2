@@ -1,14 +1,18 @@
 from app.gestor import cargar_datos, añadir_elemento, ver_elementos, buscar_elemento, editar_elemento, eliminar_elemento, Elementos_categoria, Guardar_y_Cargar, Salir
 def mostrar_menu():
-    print ('=== Coleccion Multimedia ===')
-    print ('1. añadir un  nuevo elemento')
-    print ('2. ver todos los elementos')
-    print ('3. buscar un elemento')
-    print ('4. editar un elemento')
-    print ('5. editar un elemento')
-    print ('6. ver elementos por categoria')
-    print ('7. guardar y cargar colecccion')
+    print ('====================================')
+    print ('     Administrador de Coleccion     ')
+    print ('====================================')
+    print ('1. Añadir un Nuevo Elemento ')
+    print ('2. Ver Todos los Elementos  ')
+    print ('3. Buscar un Elemento ')
+    print ('4. Editar un Elemento ')
+    print ('5. Eliminar un Elemento ')
+    print ('6. Ver Elementos por Categoria ')
+    print ('7. Guardar y Cargar coleccion ')
     print ('8. salir')
+    print ('====================================')
+    print ('Selecciona una opcion del 1-8. Gracias')
     print()
 
 def main ():
