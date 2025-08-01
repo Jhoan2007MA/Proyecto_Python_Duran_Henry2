@@ -1,42 +1,46 @@
-from app.config import ARCHIVO_JSON, MUSICA_JSON, PELICULA_JSON, LIBRO_JSON
-import os
-import json
 import utils.screencontroler as sc
+from utils.corefiles import readJson
+from app.config import ARCHIVO_JSON
 
+def verElementos():
+    while True:
+        sc.limpiarpantalla()
+        print("===========================================")
+        print("        Ver Todos los Elementos            ")
+        print("===========================================")
+        print("¿Qué categoría deseas ver?")
+        print("1. Ver Libros")
+        print("2. Ver Películas")
+        print("3. Ver Música")
+        print("4. Regresar al Menú Principal")
+        print("===========================================")
+        opcion = input("Selecciona una opción : ").strip()
 
-def Cargar_Datos():
-    sc.limpiarpantalla()
-    coleccion = []
+        tipos = {
+            "1": ("libro", "Autor"),
+            "2": ("película", "Director"),
+            "3": ("música", "Artista")
+        }
 
-    rutas = [ARCHIVO_JSON, MUSICA_JSON, PELICULA_JSON, LIBRO_JSON]
-    for ruta in rutas:
-        if os.path.exists(ruta):
-            with open(ruta, 'r', encoding='utf-8') as f:
-                try:
-                    datos = json.load(f)
-                    if isinstance(datos, list):
-                        coleccion.extend(datos)
-                    else:
-                        coleccion.append(datos)
-                except json.JSONDecodeError:
-                    print(f"Error al leer el archivo {ruta}. Archivo corrupto o vacío.")
-    return coleccion
+        if opcion == "4":
+            break
 
+        tipo_info = tipos.get(opcion)
+        if not tipo_info:
+            print("Opción inválida")
+            sc.pausar_pantalla()
+            continue
 
-def Guardar_datos(coleccion):
-    with open(ARCHIVO_JSON, 'w', encoding='utf-8') as f:
-        json.dump(coleccion, f, indent=4, ensure_ascii=False)
-    print("Datos guardados correctamente.")
+        tipoBuscado, etiqueta_autor = tipo_info
+        coleccion = readJson(ARCHIVO_JSON)
+        print(f" Buscando tipo: {tipoBuscado}")
 
+        filtrados = [e for e in coleccion if e["tipo"].lower() == tipoBuscado]
 
-def elementos_categoria(coleccion):
-    sc.limpiarpantalla()
-    categoria = input("Introduce el nombre de la categoría para ver (Libro, Película, Música): ").lower()
-    encontrados = [elem for elem in coleccion if elem.get('tipo', '').lower() == categoria]
-
-    if encontrados:
-        print(f"\nElementos en la categoría '{categoria}':")
-        for i, elem in enumerate(encontrados, 1):
-            print(f"{i}. {elem}")
-    else:
-        print(f"No se encontraron elementos en la categoría '{categoria}'.")
+        if not filtrados:
+            print(f"No hay {tipoBuscado}s registrados")
+        else:
+            print(f"\n Lista de {tipoBuscado.capitalize()}s:\n")
+            for i, item in enumerate(filtrados, 1):
+                print(f" Género: {item['genero']}  {i} \n")
+        sc.pausar_pantalla()

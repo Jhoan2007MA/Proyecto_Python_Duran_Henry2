@@ -17,30 +17,28 @@ def mostrar_menu():
     print()
 
 def main():
-    coleccion = Añadir_Elemento.Cargar_Datos()
-    while True:
+     Añadir_Elemento.readJson()
+while True:
         mostrar_menu()
         opcion = input('Seleccione una opción: ')
         print()
 
         if opcion == "1":
-            Añadir_Elemento.mostrar_menu()
-            tipo = mostrar_menu()
-            Añadir_Elemento.Anadir_Elemento(coleccion,tipo)
+            Añadir_Elemento.agregar_elemento()
         elif opcion == "2":
-            Ver_Elementos.Ver_Elementos(coleccion)
+            Ver_Elementos.Ver_Elementos()
         elif opcion == "3":
-            Buscar_Elemento.buscar_elemento(coleccion)
+            Buscar_Elemento.Buscar_Elemento()
         elif opcion == "4":
-            Editar_Elemento.editar_elemento(coleccion)
+            Editar_Elemento.editar_Elemento()
         elif opcion == "5":
-            Eliminar_Elemento.eliminar_elemento(coleccion)
+            Eliminar_Elemento.eliminar_elemento()
         elif opcion == "6":
-            Elemento_Categoria.elementos_categoria(coleccion)
+            Elemento_Categoria.elementos_categoria()
         elif opcion == "7":
-            Guardar_y_Cargar.Guardar_datos(coleccion)
+            Guardar_y_Cargar.Guardar_datos()
         elif opcion == "8":
-            Salir.salir(coleccion)
+            Salir.Salir()
             break
         else:
             print('Opción inválida. Intenta de nuevo.')

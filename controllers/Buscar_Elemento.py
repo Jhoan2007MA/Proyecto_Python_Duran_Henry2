@@ -1,33 +1,65 @@
-from app.config import ARCHIVO_JSON, MUSICA_JSON, PELICULA_JSON, LIBRO_JSON
-import os 
 import utils.screencontroler as sc
-import json
+from utils.corefiles import readJson
+from app.config import ARCHIVO_JSON
 
-def Cargar_Datos():
+def Buscar_Elemento():
+    while True:
+        sc.limpiarpantalla()
+        print("========================================")
+        print("          Buscar un Elemento            ")
+        print("========================================")
+        print("¿Que deseas buscar?")
+        print("1. Buscar por Título")
+        print("2. Buscar por Autor/Director/Artista")
+        print("3. Buscar por Género")
+        print("4. Regresar al menú principal")
+        print("========================================")
+        Opciones = input("Seleccione una opción: ").strip()
+
+        match Opciones:
+            case "1":
+                Buscar("titulo", "Título")
+            case "2":
+                Buscar("autor", "Autor / Director / Artista")
+            case "3":
+                Buscar("genero", "Género")
+            case "4":
+                break
+            case _:
+                print("Opción inválida.")
+                sc.pausar_pantalla()
+
+def Buscar(clave, etiqueta):
     sc.limpiarpantalla()
-    if os.path.exists(ARCHIVO_JSON,MUSICA_JSON,PELICULA_JSON,LIBRO_JSON):
-        with open(ARCHIVO_JSON,MUSICA_JSON,PELICULA_JSON,LIBRO_JSON, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    return [] 
+    coleccion = readJson(ARCHIVO_JSON)
 
-def Guardar_datos(coleccion):
-    with open(ARCHIVO_JSON,MUSICA_JSON,PELICULA_JSON,LIBRO_JSON ,'w', encoding='utf-8') as f:
-        json.dump(coleccion, f, indent=4, ensure_ascii=False)
-        
-def buscar_elemento(coleccion):
-    sc.limpiarpantalla()
-    criterio = input("Buscar por (1) Título o (2) Autor/Género: ")
-    termino = input("Introduce el término de búsqueda: ").lower()
+    if not coleccion:
+        print("No hay elementos registrados.")
+        sc.pausar_pantalla()
+        return
 
-    if criterio == "1":
-        resultados = [e for e in coleccion if termino in e["titulo"].lower()]
+    termino = input(f"Ingrese el {etiqueta} a buscar: ").strip().lower()
+    encontrados = []
+
+    for e in coleccion:
+        tipo = e["tipo"].lower()
+        autor_label = {
+            "libro": "Autor",
+            "película": "Director",
+            "música": "Artista"
+        }.get(tipo, "Autor")
+
+        if termino in e[clave].lower():
+            encontrados.append((e, autor_label))
+
+    if not encontrados:
+        print("No se encontraron coincidencias.")
     else:
-        resultados = [e for e in coleccion if termino in e["autor"].lower() or termino in e["genero"].lower()]
+        print(f" Resultados encontrados:")
+        for i, (item, etiqueta_autor) in enumerate(encontrados, 1):
+            print(f"{i}. Título: {item['titulo']}")
+            print(f"   {etiqueta_autor}: {item['autor']}")
+            print(f"   Género: {item['genero']}")
+            print(f"   Valoración: {item['valoracion']}\n")
 
-    if resultados:
-        for e in resultados:
-            print(f"{e['titulo']} - {e['autor']} ({e['categoria']}) | Género: {e['genero']} | Valoración: {e.get('valoracion', 'N/A')}")
-    else:
-        print("No se encontraron resultados.\n")
-    print()
-    os.system('clear')
+    sc.pausar_pantalla()

@@ -1,17 +1,17 @@
 import json
 import os
 from typing import Dict, List, Optional
-from configparser import DB_FILE
+import app.config as ac
 
 def readJson()->Dict:
     try:
-        with open(DB_FILE, "r", encoding="utf-8") as cf:
+        with open(ac.ARCHIVO_JSON, "r", encoding="utf-8") as cf:
             return json.load(cf)
     except (FileNotFoundError, json.JSONDecodeError):
         return {}
 
 def writeJson(data : Dict)->Dict:
-    with open(DB_FILE, "w", encoding="utf-8") as cf:
+    with open(ac.ARCHIVO_JSON, "w", encoding="utf-8") as cf:
         json.dump(data, cf, indent=4)
 
 def updateJson(data : Dict, path: Optional[List[str]] = None) -> None:
@@ -46,7 +46,7 @@ def deleteJson(path: List[str])->bool:
     return False
 
 def initializeJson(initialStructure:Dict)->None:
-    if not os.path.isfile(DB_FILE):
+    if not os.path.isfile(ac.ARCHIVO_JSON):
         writeJson(initialStructure)
     else:
         currentData = readJson()
