@@ -18,7 +18,7 @@ def editar_elemento(coleccion):
     sc.limpiarpantalla()
     titulo = input("Introduce el título del elemento a editar: ").lower()
     for elem in coleccion:
-        if elem["titulo"].lower() == titulo:
+        if elem["titulo"].lower() == titulo.lower():
             print("Elemento encontrado. Deja vacío si no deseas cambiar un campo.")
             nuevo_titulo = input(f"Título actual: {elem['titulo']} > ")
             nuevo_autor = input(f"Autor actual: {elem['autor']} > ")
