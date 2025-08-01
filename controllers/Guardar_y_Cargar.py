@@ -3,7 +3,7 @@ import json
 import os
 import utils.screencontroler as sc
 
-def cargar_datos():
+def Cargar_Datos():
     sc.limpiarpantalla()
     coleccion = []
 
@@ -21,7 +21,7 @@ def cargar_datos():
                     print(f"⚠️  Error al leer el archivo {ruta}.")
     return coleccion
 
-def guardar_datos(coleccion):
+def Guardar_datos(coleccion):
     # Guardar todo en un archivo principal
     with open(ARCHIVO_JSON, 'w', encoding='utf-8') as f:
         json.dump(coleccion, f, indent=4, ensure_ascii=False)
@@ -40,6 +40,6 @@ def guardar_datos(coleccion):
 
     print("✅ Colección guardada correctamente en todos los archivos.")
 
-def guardar_y_cargar():
-    coleccion = cargar_datos()
-    guardar_datos(coleccion)
+def Guardar_y_cargar():
+    coleccion = Cargar_Datos()
+    Guardar_datos(coleccion)

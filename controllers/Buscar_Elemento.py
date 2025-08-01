@@ -3,7 +3,7 @@ import os
 import utils.screencontroler as sc
 import json
 
-def cargar_datos():
+def Cargar_Datos():
     sc.limpiarpantalla()
     if os.path.exists(ARCHIVO_JSON,MUSICA_JSON,PELICULA_JSON,LIBRO_JSON):
         with open(ARCHIVO_JSON,MUSICA_JSON,PELICULA_JSON,LIBRO_JSON, 'r', encoding='utf-8') as f:

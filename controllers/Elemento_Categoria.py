@@ -4,7 +4,7 @@ import json
 import utils.screencontroler as sc
 
 
-def cargar_datos():
+def Cargar_Datos():
     sc.limpiarpantalla()
     coleccion = []
 
@@ -23,7 +23,7 @@ def cargar_datos():
     return coleccion
 
 
-def guardar_datos(coleccion):
+def Guardar_datos(coleccion):
     with open(ARCHIVO_JSON, 'w', encoding='utf-8') as f:
         json.dump(coleccion, f, indent=4, ensure_ascii=False)
     print("Datos guardados correctamente.")
