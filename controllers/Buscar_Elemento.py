@@ -8,7 +8,7 @@ def buscar_elemento():
         print("========================================")
         print("          Buscar un Elemento            ")
         print("========================================")
-        print("¿Que deseas buscar?")
+        print("¿Qué deseas buscar?")
         print("1. Buscar por Título")
         print("2. Buscar por Autor/Director/Artista")
         print("3. Buscar por Género")
@@ -18,7 +18,7 @@ def buscar_elemento():
 
         match Opciones:
             case "1":
-                Buscar("titulo", "Título")
+                Buscar("nombre", "Nombre")
             case "2":
                 Buscar("autor", "Autor / Director / Artista")
             case "3":
@@ -42,24 +42,29 @@ def Buscar(clave, etiqueta):
     encontrados = []
 
     for e in coleccion:
-        tipo = e["tipo"].lower()
+        tipo = e.get("categoria", "").lower()
+        valor_clave = e.get(clave, "").lower()
+
+        if not valor_clave:
+            continue
+
         autor_label = {
             "libro": "Autor",
             "película": "Director",
             "música": "Artista"
         }.get(tipo, "Autor")
 
-        if termino in e[clave].lower():
+        if termino in valor_clave:
             encontrados.append((e, autor_label))
 
     if not encontrados:
         print("No se encontraron coincidencias.")
     else:
-        print(f" Resultados encontrados:")
+        print(" Resultados encontrados:")
         for i, (item, etiqueta_autor) in enumerate(encontrados, 1):
-            print(f"{i}. Título: {item['titulo']}")
-            print(f"   {etiqueta_autor}: {item['autor']}")
-            print(f"   Género: {item['genero']}")
-            print(f"   Valoración: {item['valoracion']}\n")
+            print(f"{i}. Título: {item.get('nombre', 'N/A')}")
+            print(f"   {etiqueta_autor}: {item.get('autor', 'N/A')}")
+            print(f"   Género: {item.get('genero', 'N/A')}")
+            print(f"   Valoración: {item.get('calificacion', 'N/A')}\n")
 
     sc.pausar_pantalla()

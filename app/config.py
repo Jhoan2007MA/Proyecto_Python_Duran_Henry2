@@ -1,1 +1,1 @@
-ARCHIVO_JSON = 'datos.json'
+ARCHIVO_JSON = 'data/datos.json'

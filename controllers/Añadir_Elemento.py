@@ -38,16 +38,19 @@ def agregar_elemento(categoria):
     sc.limpiarpantalla()
     print(f"=== Agregar nuevo elemento a la categoría: {categoria} ===\n")
 
+    # Leer datos actuales
+    datos = readJson(ARCHIVO_JSON)
+    if not isinstance(datos, list):
+        datos = []
+
     nombre = input("Nombre del elemento: ").strip()
     if not nombre:
         print(" El nombre no puede estar vacío.")
         input("Presiona ENTER para regresar...")
         return
-
-    # Leer datos actuales
-    datos = readJson(ARCHIVO_JSON)
-    if not isinstance(datos, list):
-        datos = []
+    calificacion = input('Ingrese la calificacion : ')
+    genero = input('Ingrese el genero : ')
+    autor = input('Ingrese el nombre del autor : ')
 
     # Calcular nuevo ID
     ids_existentes = [item.get("id", 0) for item in datos if isinstance(item, dict)]
@@ -64,12 +67,15 @@ def agregar_elemento(categoria):
     nuevo_elemento = {
         "id": nuevo_id,
         "nombre": nombre,
-        "categoria": categoria
+        "autor": autor,
+        "categoria": categoria,
+        "calificacion": calificacion,
+        "genero": genero 
     }
     datos.append(nuevo_elemento)
     writeJson(ARCHIVO_JSON, datos)
 
     print("\n✅ Elemento agregado correctamente.")
-    print(f"ID: {nuevo_id} | Nombre: {nombre} | Categoría: {categoria}")
+    print(f"ID: {nuevo_id} | Nombre: {nombre} | Categoría: {categoria} | calificacion : {calificacion}| genero: {genero}| autor: {autor}")
     input("\nPresiona ENTER para continuar...")
 

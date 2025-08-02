@@ -51,9 +51,9 @@ def editar_elemento():
             if nuevo:
                 elemento["genero"] = nuevo
         elif opcion == "4":
-            nuevo = input("Nueva valoración (ej. 4.5/5): ").strip()
+            nuevo = input("Nueva calificacion (ej. 4.5/5): ").strip()
             if nuevo:
-                elemento["valoracion"] = nuevo
+                elemento["calificacion"] = nuevo
         elif opcion == "5":
             break
         else:

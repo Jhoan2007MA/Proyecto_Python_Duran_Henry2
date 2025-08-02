@@ -1,5 +1,7 @@
+import sys
 import utils.screencontroler as sc
-from controllers import (Añadir_Elemento, Buscar_Elemento, Editar_Elemento, Elemento_Categoria, Eliminar_Elemento, Guardar_y_Cargar, Salir, Ver_Elementos)
+from controllers import Añadir_Elemento, Buscar_Elemento, Editar_Elemento, Elemento_Categoria, Eliminar_Elemento, Guardar_y_Cargar, Ver_Elementos
+import app.config as config
 
 def main():
     while True:
@@ -33,7 +35,7 @@ def main():
         elif opcion == "7":
             Guardar_y_Cargar.guardarycargar()
         elif opcion == "8":
-            Salir.salir()
+            sys.exit()
         else:
             print("Opción inválida. Presiona ENTER para intentar de nuevo...")
             input()

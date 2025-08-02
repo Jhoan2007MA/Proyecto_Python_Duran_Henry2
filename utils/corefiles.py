@@ -3,14 +3,14 @@ import os
 from typing import Dict, List, Optional
 import app.config as ac
 
-def readJson()->Dict:
+def readJson(data)->List:
     try:
         with open(ac.ARCHIVO_JSON, "r", encoding="utf-8") as cf:
             return json.load(cf)
     except (FileNotFoundError, json.JSONDecodeError):
         return {}
 
-def writeJson(data : Dict)->Dict:
+def writeJson(filename  ,data)->List:
     with open(ac.ARCHIVO_JSON, "w", encoding="utf-8") as cf:
         json.dump(data, cf, indent=4)
 
