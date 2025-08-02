@@ -2,64 +2,74 @@ from app.config import ARCHIVO_JSON
 from utils.corefiles import readJson, writeJson
 import utils.screencontroler as sc 
 
-def agregar_elemento():
+
+def añadir_elemento():
     while True:
         sc.limpiarpantalla()
-        print("========================================")
-        print("       Añadir un Nuevo Elemento         ")
-        print("========================================")
-        print("¿Qué tipo de elemento deseas añadir?")
+        print("===========================================")
+        print("        Añadir un nuevo elemento")
+        print("===========================================")
+        print("¿Qué tipo de elemento deseas agregar?")
         print("1. Libro")
         print("2. Película")
         print("3. Música")
-        print("4. Regresar al menú principal")
-        print("========================================")
-        print('Seleccione una opcion del (1-3)')
+        print("4. Regresar al Menú Principal")
+        print("===========================================")
+
+        opcion = input("Selecciona una opción (1-4): ").strip()
+
+        if opcion == "1":
+            tipo = 'Libro'
+            agregar_elemento(tipo)
+        elif opcion == "2":
+            tipo ='Pelicula'
+            agregar_elemento(tipo)
+        elif opcion == "3":
+            tipo = 'Musica'
+            agregar_elemento(tipo)
+        elif opcion == "4":
+            break
+        else:
+            print("Opción inválida. Presiona ENTER para continuar...")
+            input()
 
 
-tipos ={
-    "1": ("Libro", "Autor"),
-            "2": ("Película", "Director"),
-            "3": ("Música", "Artista")
+def agregar_elemento(categoria):
+    sc.limpiarpantalla()
+    print(f"=== Agregar nuevo elemento a la categoría: {categoria} ===\n")
+
+    nombre = input("Nombre del elemento: ").strip()
+    if not nombre:
+        print(" El nombre no puede estar vacío.")
+        input("Presiona ENTER para regresar...")
+        return
+
+    # Leer datos actuales
+    datos = readJson(ARCHIVO_JSON)
+    if not isinstance(datos, list):
+        datos = []
+
+    # Calcular nuevo ID
+    ids_existentes = [item.get("id", 0) for item in datos if isinstance(item, dict)]
+    nuevo_id = max(ids_existentes, default=0) + 1
+
+    # Verificar duplicados (opcional, puedes quitar esto si no lo necesitas)
+    for item in datos:
+        if item.get("nombre", "").lower() == nombre.lower() and item.get("categoria") == categoria:
+            print(" Ya existe un elemento con ese nombre en esta categoría.")
+            input("Presiona ENTER para regresar...")
+            return
+
+    # Crear y agregar nuevo elemento
+    nuevo_elemento = {
+        "id": nuevo_id,
+        "nombre": nombre,
+        "categoria": categoria
     }
+    datos.append(nuevo_elemento)
+    writeJson(ARCHIVO_JSON, datos)
 
-tipo_info = tipos.get()
-if not tipo_info:
-    print("Opción inválida")
-    sc.pausar_pantalla()
+    print("\n✅ Elemento agregado correctamente.")
+    print(f"ID: {nuevo_id} | Nombre: {nombre} | Categoría: {categoria}")
+    input("\nPresiona ENTER para continuar...")
 
-tipo, etiqueta_autor = tipo_info
-print(f" Añadiendo nuevo {tipo}")
-
-titulo = input("Título: ").strip()
-autor = input(f"{etiqueta_autor}: ").strip()
-genero = input("Género: ").strip()
-
-if not titulo or not autor or not genero:
-    print("Título, autor/director/artista y género no pueden estar vacios")
-    sc.pausar_pantalla() 
-
-    while True:
-            valoracion = input("Valoración (1 a 10): ").strip()
-            if valoracion == "":
-                valoracion = None
-                break
-            if valoracion.isdigit():
-                valoracion_num = int(valoracion)
-                if 1 <= valoracion_num <= 10:
-                    break
-            print("Valoración inválida. Debe ser un número del 1 al 10 o dejarlo vacío.")
-
-    nuevo = {
-            "tipo": tipo,
-            "titulo": titulo,
-            "autor": autor,
-            "genero": genero,
-            "valoracion": valoracion 
-        }
-
-coleccion = readJson(ARCHIVO_JSON)
-coleccion.append(nuevo)
-writeJson(ARCHIVO_JSON, coleccion)
-print(f"{tipo} agregado correctamente")
-sc.pausar_pantalla()

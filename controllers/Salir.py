@@ -1,21 +1,22 @@
-from app.config import ARCHIVO_JSON, MUSICA_JSON, PELICULA_JSON, LIBRO_JSON
-import json
-import os
 import utils.screencontroler as sc
+from utils.corefiles import writeJson
+from app.config import ARCHIVO_JSON
+import sys
 
-def Cargar_Datos():
+def salir(coleccion):
     sc.limpiarpantalla()
-    if os.path.exists(ARCHIVO_JSON,MUSICA_JSON,PELICULA_JSON,LIBRO_JSON):
-        with open(ARCHIVO_JSON,MUSICA_JSON,PELICULA_JSON,LIBRO_JSON, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    return [] 
+    print("Estás a punto de salir del programa.")
+    opcion = input("¿Deseas guardar la colección antes de salir? (s/n): ").strip().lower()
 
+    if opcion == "s":
+        writeJson(ARCHIVO_JSON, coleccion)
+        print("Colección guardada correctamente.")
+    elif opcion == "n":
+        print("Cambios no guardados.")
+    else:
+        print("Opción inválida. No se guardaron los cambios.")
 
-def Guardar_datos(coleccion):
-    with open(ARCHIVO_JSON,MUSICA_JSON,PELICULA_JSON,LIBRO_JSON ,'w', encoding='utf-8') as f:
-        json.dump(coleccion, f, indent=4, ensure_ascii=False)
-        
-def Salir(coleccion):
-        Guardar_datos(coleccion)
-        print("Datos guardados correctamente. Saliendo del programa...")
-        exit()
+    print("Gracias por usar el Administrador de Colección.")
+    input("Presione ENTER para cerrar...")
+
+sys.exit()

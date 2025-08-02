@@ -1,47 +1,42 @@
-from controllers import Añadir_Elemento, Buscar_Elemento, Editar_Elemento, Elemento_Categoria, Eliminar_Elemento, Guardar_y_Cargar, Salir, Ver_Elementos
-
-def mostrar_menu():
-    print('====================================')
-    print('     Administrador de Coleccion     ')
-    print('====================================')
-    print('1. Añadir un Nuevo Elemento')
-    print('2. Ver Todos los Elementos')
-    print('3. Buscar un Elemento')
-    print('4. Editar un Elemento')
-    print('5. Eliminar un Elemento')
-    print('6. Ver Elementos por Categoria')
-    print('7. Guardar y Cargar coleccion')
-    print('8. Salir')
-    print('====================================')
-    print('Selecciona una opcion del 1-8. Gracias')
-    print()
+import utils.screencontroler as sc
+from controllers import (Añadir_Elemento, Buscar_Elemento, Editar_Elemento, Elemento_Categoria, Eliminar_Elemento, Guardar_y_Cargar, Salir, Ver_Elementos)
 
 def main():
-     Añadir_Elemento.readJson()
-while True:
-        mostrar_menu()
-        opcion = input('Seleccione una opción: ')
-        print()
+    while True:
+        sc.limpiarpantalla()
+        print("===========================================")
+        print("           Coleccion                       ")
+        print("===========================================")
+        print("1. Añadir Elemento")
+        print("2. Buscar Elemento")
+        print("3. Editar Elemento")
+        print("4. Ver por Categoría")
+        print("5. Ver Todos los Elementos")
+        print("6. Eliminar Elemento")
+        print("7. Guardar/Cargar Datos")
+        print("8. Salir")
+        print("===========================================")
+        opcion = input("Selecciona una opción (1-8): ")
 
         if opcion == "1":
-            Añadir_Elemento.agregar_elemento()
+            Añadir_Elemento.añadir_elemento()
         elif opcion == "2":
-            Ver_Elementos.Ver_Elementos()
+            Buscar_Elemento.buscar_elemento()
         elif opcion == "3":
-            Buscar_Elemento.Buscar_Elemento()
+            Editar_Elemento.editar_elemento()
         elif opcion == "4":
-            Editar_Elemento.editar_Elemento()
+            Elemento_Categoria.ver_elementos_por_categoria()
         elif opcion == "5":
-            Eliminar_Elemento.eliminar_elemento()
+            Ver_Elementos.ver_elementos()
         elif opcion == "6":
-            Elemento_Categoria.elementos_categoria()
+            Eliminar_Elemento.eliminar_elemento()
         elif opcion == "7":
-            Guardar_y_Cargar.Guardar_datos()
+            Guardar_y_Cargar.guardarycargar()
         elif opcion == "8":
-            Salir.Salir()
-            break
+            Salir.salir()
         else:
-            print('Opción inválida. Intenta de nuevo.')
+            print("Opción inválida. Presiona ENTER para intentar de nuevo...")
+            input()
 
 if __name__ == "__main__":
     main()

@@ -1,45 +1,34 @@
-from app.config import ARCHIVO_JSON, MUSICA_JSON, PELICULA_JSON, LIBRO_JSON
-import json
-import os
 import utils.screencontroler as sc
+from utils.corefiles import readJson, writeJson
+from app.config import ARCHIVO_JSON
 
-def Cargar_Datos():
-    sc.limpiarpantalla()
-    coleccion = []
+def guardarycargar(coleccion):
+    while True:
+        sc.limpiarpantalla()
+        print('======= Guardar / Cargar Colección =======')
+        print('Que deseas hacer                         ?')
+        print('1. Guardar la colección actual            ')
+        print('2. Cargar una colección guardada          ')
+        print('3. Volver al menú principal               ')
+        print('==========================================')
+        print('seleccione una opcion (1-3) :             ')
+        opcion = input('Seleccione una opción (1-3):     ')
+        print()
 
-    rutas = [ARCHIVO_JSON, MUSICA_JSON, PELICULA_JSON, LIBRO_JSON]
-    for ruta in rutas:
-        if os.path.exists(ruta):
-            with open(ruta, 'r', encoding='utf-8') as f:
-                try:
-                    datos = json.load(f)
-                    if isinstance(datos, list):
-                        coleccion.extend(datos)
-                    else:
-                        coleccion.append(datos)
-                except json.JSONDecodeError:
-                    print(f"⚠️  Error al leer el archivo {ruta}.")
-    return coleccion
+        if opcion == "1":
+            writeJson(ARCHIVO_JSON, coleccion)
+            print('Colección guardada exitosamente.\n')
+        elif opcion == "2":
+            datos = readJson(ARCHIVO_JSON)
+            if datos:
+                coleccion.clear()
+                coleccion.extend(datos)
+                print('Colección cargada exitosamente desde el archivo.')
+            else:
+                print(' No se encontró información válida para cargar.')
+        elif opcion == "3":
+            break
+        else:
+            print(' Opción inválida. Intente nuevamente.')
 
-def Guardar_datos(coleccion):
-    # Guardar todo en un archivo principal
-    with open(ARCHIVO_JSON, 'w', encoding='utf-8') as f:
-        json.dump(coleccion, f, indent=4, ensure_ascii=False)
-    
-    # Separar por tipo
-    libros = [e for e in coleccion if e.get("tipo", "").lower() == "libro"]
-    peliculas = [e for e in coleccion if e.get("tipo", "").lower() == "película"]
-    musica = [e for e in coleccion if e.get("tipo", "").lower() == "música"]
-
-    with open(LIBRO_JSON, 'w', encoding='utf-8') as f:
-        json.dump(libros, f, indent=4, ensure_ascii=False)
-    with open(PELICULA_JSON, 'w', encoding='utf-8') as f:
-        json.dump(peliculas, f, indent=4, ensure_ascii=False)
-    with open(MUSICA_JSON, 'w', encoding='utf-8') as f:
-        json.dump(musica, f, indent=4, ensure_ascii=False)
-
-    print("✅ Colección guardada correctamente en todos los archivos.")
-
-def Guardar_y_cargar():
-    coleccion = Cargar_Datos()
-    Guardar_datos(coleccion)
+        input("Presione ENTER para continuar...")

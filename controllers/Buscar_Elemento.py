@@ -2,7 +2,7 @@ import utils.screencontroler as sc
 from utils.corefiles import readJson
 from app.config import ARCHIVO_JSON
 
-def Buscar_Elemento():
+def buscar_elemento():
     while True:
         sc.limpiarpantalla()
         print("========================================")

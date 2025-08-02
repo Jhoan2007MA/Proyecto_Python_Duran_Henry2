@@ -2,11 +2,12 @@ import utils.screencontroler as sc
 from utils.corefiles import readJson
 from app.config import ARCHIVO_JSON
 
-def verElementos():
+
+def ver_elementos_por_categoria():
     while True:
         sc.limpiarpantalla()
         print("===========================================")
-        print("        Ver Todos los Elementos            ")
+        print("        Ver elementos por categoría")
         print("===========================================")
         print("¿Qué categoría deseas ver?")
         print("1. Ver Libros")
@@ -14,33 +15,32 @@ def verElementos():
         print("3. Ver Música")
         print("4. Regresar al Menú Principal")
         print("===========================================")
-        opcion = input("Selecciona una opción : ").strip()
+        opcion = input("Selecciona una opción (1-4): ")
 
-        tipos = {
-            "1": ("libro", "Autor"),
-            "2": ("película", "Director"),
-            "3": ("música", "Artista")
-        }
+        datos = readJson(ARCHIVO_JSON)
 
-        if opcion == "4":
+        if opcion == "1":
+            mostrar_categoria(datos, "Libros")
+        elif opcion == "2":
+            mostrar_categoria(datos, "Películas")
+        elif opcion == "3":
+            mostrar_categoria(datos, "Música")
+        elif opcion == "4":
             break
-
-        tipo_info = tipos.get(opcion)
-        if not tipo_info:
-            print("Opción inválida")
-            sc.pausar_pantalla()
-            continue
-
-        tipoBuscado, etiqueta_autor = tipo_info
-        coleccion = readJson(ARCHIVO_JSON)
-        print(f" Buscando tipo: {tipoBuscado}")
-
-        filtrados = [e for e in coleccion if e["tipo"].lower() == tipoBuscado]
-
-        if not filtrados:
-            print(f"No hay {tipoBuscado}s registrados")
         else:
-            print(f"\n Lista de {tipoBuscado.capitalize()}s:\n")
-            for i, item in enumerate(filtrados, 1):
-                print(f" Género: {item['genero']}  {i} \n")
-        sc.pausar_pantalla()
+            print("Opción inválida. Presiona ENTER para intentar nuevamente.")
+            input()
+
+
+def mostrar_categoria(datos, categoria):
+    sc.limpiarpantalla()
+    print(f"======= Elementos en categoría: {categoria} =======")
+    encontrados = False
+    for elemento in datos:
+        if elemento.get("categoria") == categoria:
+            encontrados = True
+            print(f"- {elemento.get('nombre', 'Nombre no disponible')}")
+    if not encontrados:
+        print("No se encontraron elementos en esta categoría.")
+    input("\nPresiona ENTER para continuar...")
+
